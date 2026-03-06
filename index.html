@@ -7,199 +7,233 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-
-    body{
-        font-family:Poppins, sans-serif;
-        background:#0c0c0c;
-        color:white;
-        overflow-x:hidden;
+    :root {
+        --primary: #f3c84b;
+        --bg: #080808;
+        --card-bg: rgba(20, 20, 20, 0.8);
+        --border: rgba(243, 200, 75, 0.2);
     }
 
-    /* Header Styling */
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    /* --- LOADING SCREEN --- */
+    #loader {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .loader-content { width: 300px; text-align: center; }
+    
+    .loader-text {
+        font-family: Cinzel;
+        color: var(--primary);
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+        font-size: 16px;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(243, 200, 75, 0.5);
+    }
+
+    .progress-bar-container {
+        width: 100%;
+        height: 2px;
+        background: rgba(243, 200, 75, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        position: absolute;
+        height: 100%;
+        width: 0%;
+        background: var(--primary);
+        box-shadow: 0 0 15px var(--primary);
+        transition: width 0.4s ease;
+    }
+
+    .percentage {
+        font-family: 'Poppins';
+        color: white;
+        margin-top: 10px;
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .loader-finished { transform: translateY(-100%); }
+
+    /* --- MAIN BODY STYLES --- */
+    body{
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg);
+        color: white;
+        overflow-x: hidden;
+        background-image: linear-gradient(var(--border) 1px, transparent 1px), 
+                          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
     header{
         display:flex;
         justify-content:space-between;
         align-items:center;
-        padding:15px 40px;
-        background:rgba(0,0,0,0.95);
+        padding:20px 40px;
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(12px);
         position:sticky;
         top:0;
-        z-index:1000;
-        border-bottom: 1px solid #f3c84b33;
+        z-index: 1000;
+        border-bottom: 1px solid var(--border);
     }
 
-    /* Logo Glow Fix for JPGs */
-    .logo { display: flex; align-items: center; }
+    .logo { display: flex; align-items: center; gap: 10px; }
     .logo img{
-        height:50px; 
-        margin:0 10px; 
+        height:45px; 
+        width: auto;
         object-fit: contain;
-        border-radius: 50%; /* Optional: keeps jpgs neat */
-        box-shadow: 0 0 15px rgba(243, 200, 75, 0.3);
-        transition: 0.4s;
+        filter: drop-shadow(0 0 8px var(--primary));
     }
-    .logo img:hover { transform: scale(1.1); box-shadow: 0 0 20px #f3c84b; }
 
     .title{
-        font-family:Cinzel;
-        letter-spacing:3px;
-        font-size:26px;
-        color: #f3c84b;
-        text-shadow: 0 0 10px rgba(243, 200, 75, 0.5);
+        font-family: Cinzel;
+        letter-spacing: 4px;
+        font-size: 24px;
+        color: var(--primary);
+        font-weight: 800;
     }
 
-    /* Hero Section with Animation */
     .hero{
-        height:100vh;
-        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("poster.jpg") center/cover fixed;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        align-items:center;
-        text-align:center;
+        height: 90vh;
+        background: radial-gradient(circle at center, rgba(243, 200, 75, 0.1) 0%, transparent 70%), 
+                    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.9)), url("poster.jpg") center/cover fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
     }
 
     .hero h1{
-        font-family:Cinzel;
-        font-size:90px;
-        letter-spacing:6px;
+        font-family: Cinzel;
+        font-size: clamp(60px, 10vw, 110px);
+        letter-spacing: 12px;
         color: #fff;
-        text-shadow: 0 0 20px #f3c84b, 0 0 40px #f3c84b;
-        animation: glowPulse 3s infinite alternate;
+        text-shadow: 0 0 30px var(--primary);
     }
 
-    @keyframes glowPulse {
-        from { text-shadow: 0 0 10px #f3c84b, 0 0 20px #f3c84b; }
-        to { text-shadow: 0 0 20px #f3c84b, 0 0 50px #f3c84b, 0 0 80px #f3c84b; }
+    .countdown-container {
+        margin-top: 20px;
+        background: rgba(0,0,0,0.6);
+        padding: 15px 40px;
+        border: 1px solid var(--primary);
+        border-radius: 100px;
     }
 
-    .hero p{
-        font-size:22px;
-        max-width:700px;
-        margin-top:20px;
-        opacity: 0;
-        animation: fadeInUp 1s forwards 0.5s;
+    .countdown{
+        font-size: clamp(18px, 4vw, 32px);
+        color: var(--primary);
+        font-weight: 600;
+        font-family: Cinzel;
     }
 
     .btn{
-        margin-top:30px;
-        padding:16px 45px;
-        background:#f3c84b;
-        border:none;
-        border-radius:40px;
-        font-size:20px;
-        font-weight:600;
-        cursor:pointer;
+        margin-top: 40px;
+        padding: 18px 50px;
+        background: var(--primary);
+        border: none;
+        border-radius: 4px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
         text-decoration: none;
         color: black;
-        display: inline-block;
-        box-shadow: 0 0 15px rgba(243, 200, 75, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 2px;
         transition: 0.3s;
     }
 
     .btn:hover{
-        transform: scale(1.05);
-        box-shadow: 0 0 30px #f3c84b;
         background: #fff;
+        box-shadow: 0 0 40px var(--primary);
+        transform: translateY(-3px);
     }
 
-    .countdown{
-        margin-top:25px;
-        font-size:36px;
-        color:#f3c84b;
-        font-weight: bold;
-        text-shadow: 0 0 10px rgba(243, 200, 75, 0.3);
-    }
-
-    /* Sections and Cards */
-    section{
-        padding:100px 10%;
-        text-align:center;
-    }
+    section{ padding: 80px 10%; }
 
     h2 {
         font-family: Cinzel;
-        font-size: 40px;
-        margin-bottom: 20px;
-        color: #f3c84b;
-        text-shadow: 0 0 10px rgba(243, 200, 75, 0.2);
+        font-size: 36px;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #fff;
     }
 
-    .cards{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-        gap:30px;
-        margin-top:50px;
+    .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 
-    .card{
-        background:#1a1a1a;
-        padding:45px;
-        border-radius:16px;
-        border: 1px solid transparent;
-        transition:0.4s;
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        padding: 30px;
+        border-radius: 12px;
+        transition: 0.4s;
+        backdrop-filter: blur(10px);
     }
 
-    .card:hover{
-        transform:translateY(-15px);
-        box-shadow:0 15px 40px rgba(243, 200, 75, 0.2);
-        border: 1px solid #f3c84b;
+    .card:hover {
+        border-color: var(--primary);
+        background: rgba(243, 200, 75, 0.05);
+        transform: translateY(-5px);
     }
 
-    .card h3 { color: #f3c84b; margin-bottom: 10px; }
+    .card.large { grid-column: span 2; }
+    .card h3 { color: var(--primary); font-family: Cinzel; margin-bottom: 15px; }
 
-    .map-section{ background:#111; }
+    .map-section { background: rgba(10, 10, 10, 0.9); }
+    .map-box { border: 1px solid var(--border); padding: 15px; border-radius: 20px; overflow: hidden; }
+    .map-box img { width: 100%; display: block; border-radius: 10px; filter: grayscale(0.5); transition: 0.5s; }
+    .map-box img:hover { filter: grayscale(0); transform: scale(1.02); }
 
-    .map-box{
-        margin-top:40px;
-        padding:30px;
-        background:#1c1c1c;
-        border-radius:20px;
-        transition: 1s;
-    }
-    
-    .map-box:hover { transform: scale(1.02); }
+    .steps-container { display: flex; justify-content: space-between; gap: 20px; margin-top: 40px; }
+    .step-box { flex: 1; padding: 20px; border-left: 2px solid var(--primary); background: rgba(255, 255, 255, 0.03); }
 
-    .map-box img{
-        width:100%;
-        max-width: 800px;
-        border-radius:12px;
-        filter: sepia(0.3) contrast(1.1);
-    }
+    footer { padding: 60px 40px; background: #000; border-top: 1px solid var(--border); text-align: center; }
 
-    .step{ 
-        margin:25px 0; 
-        font-size:22px; 
-        transition: 0.3s;
-    }
-    .step:hover { color: #f3c84b; transform: translateX(10px); }
-
-    footer{ padding:30px; text-align:center; background:black; border-top: 1px solid #333; }
-
-    /* Animations */
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media(max-width:768px){
-        .hero h1{ font-size:60px; }
-        .countdown{ font-size:26px; }
-        header { padding: 15px 20px; }
+    @media(max-width: 900px){
+        .bento-grid { grid-template-columns: 1fr; }
+        .card.large { grid-column: span 1; }
+        .steps-container { flex-direction: column; }
     }
 </style>
 </head>
 
 <body>
 
+<div id="loader">
+    <div class="loader-content">
+        <div class="loader-text">QUESTA 2026 is loading</div>
+        <div class="progress-bar-container">
+            <div id="progress" class="progress-bar"></div>
+        </div>
+        <div id="percent" class="percentage">0%</div>
+    </div>
+</div>
+
 <header>
     <div class="logo">
         <img src="cass.png" alt="CASS Logo">
     </div>
-
     <div class="title">QUESTA 2026</div>
-
     <div class="logo">
         <img src="iem.jpg" alt="IEM Logo">
         <img src="uem.jpg" alt="UEM Logo">
@@ -209,16 +243,19 @@
 <div class="hero">
     <h1>QUESTA</h1>
     <p>The map is ready. The clues are hidden. The hunt begins.</p>
-    <div id="countdown" class="countdown"></div>
+    <div class="countdown-container">
+        <div id="countdown" class="countdown"></div>
+    </div>
     <a href="https://forms.gle/xCchkuLSCXxkgDL98" class="btn">Register Now</a>
 </div>
 
 <section>
     <h2>About The Hunt</h2>
-    <p style="max-width:700px;margin:auto;margin-top:20px">
-        QUESTA is a campus-wide treasure hunt packed with puzzles, secret clues, and mysterious locations. Teams must think fast, decode cleverly, and race across the campus map to reach the final treasure.
-    </p>
-    <div class="cards">
+    <div class="bento-grid">
+        <div class="card large">
+            <h3>Mission Brief</h3>
+            <p>QUESTA is a campus-wide treasure hunt packed with puzzles, secret clues, and mysterious locations. Teams must think fast, decode cleverly, and race across the campus map to reach the final treasure.</p>
+        </div>
         <div class="card">
             <h3>📅 Event Date</h3>
             <p>21 March 2026</p>
@@ -227,9 +264,9 @@
             <h3>👥 Team Size</h3>
             <p>2–3 Members per team</p>
         </div>
-        <div class="card">
+        <div class="card large">
             <h3>🏆 Rewards</h3>
-            <p>Exciting prizes + Goodie bags</p>
+            <p>Exciting prizes + Goodie bags for the top explorers of the campus.</p>
         </div>
     </div>
 </section>
@@ -243,24 +280,49 @@
 
 <section>
     <h2>How The Hunt Works</h2>
-    <div class="step">🔍 Find the first clue</div>
-    <div class="step">🧩 Solve the puzzle</div>
-    <div class="step">🗺️ Discover the next location</div>
-    <div class="step">🏁 Reach the final treasure</div>
+    <div class="steps-container">
+        <div class="step-box">🔍 Find the first clue</div>
+        <div class="step-box">🧩 Solve the puzzle</div>
+        <div class="step-box">🗺️ Discover the next location</div>
+        <div class="step-box">🏁 Reach the final treasure</div>
+    </div>
 </section>
 
-<section style="background:#000;">
+<section style="background:#050505; text-align: center; border-top: 1px solid var(--border);">
     <h2>Contact</h2>
-    <p style="margin-top:20px">Deep Batabyal: +91 81011 44074</p>
-    <p>Sarbatriki Jana: +91 86970 42026</p>
+    <p style="color: var(--primary); font-size: 20px;">Deep Batabyal: +91 81011 44074</p>
+    <p style="color: var(--primary); font-size: 20px; margin-top: 10px;">Sarbatriki Jana: +91 86970 42026</p>
 </section>
 
 <footer>
-    <p>Organized by IEEE IEM CASS</p>
-    <p>© 2026 IEM-UEM</p>
+    <p style="letter-spacing: 2px;">Organized by IEEE IEM CASS</p>
+    <p style="opacity: 0.5; margin-top: 10px;">© 2026 IEM-UEM</p>
 </footer>
 
 <script>
+    // PRE-LOADER LOGIC
+    window.addEventListener('load', function() {
+        let progress = document.getElementById('progress');
+        let percentText = document.getElementById('percent');
+        let loader = document.getElementById('loader');
+        let width = 0;
+
+        let interval = setInterval(function() {
+            if (width >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loader.classList.add('loader-finished');
+                }, 500);
+            } else {
+                width += Math.floor(Math.random() * 8) + 1;
+                if(width > 100) width = 100;
+                progress.style.width = width + '%';
+                percentText.innerHTML = width + '%';
+            }
+        }, 60);
+    });
+
+    // COUNTDOWN LOGIC
     var countDownDate = new Date("March 21, 2026 00:00:00").getTime();
     setInterval(function(){
         var now = new Date().getTime();
@@ -268,9 +330,11 @@
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
         var el = document.getElementById("countdown");
         if(distance > 0){
-            el.innerHTML = days + " Days " + hours + " Hours " + minutes + " Minutes";
+            el.innerHTML = days + "D : " + hours + "H : " + minutes + "M : " + seconds + "S";
         } else {
             el.innerHTML = "THE HUNT HAS BEGUN!";
         }
