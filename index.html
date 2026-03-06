@@ -16,28 +16,42 @@
         overflow-x:hidden;
     }
 
+    /* Header Styling */
     header{
         display:flex;
         justify-content:space-between;
         align-items:center;
         padding:15px 40px;
-        background:black;
+        background:rgba(0,0,0,0.95);
         position:sticky;
         top:0;
         z-index:1000;
+        border-bottom: 1px solid #f3c84b33;
     }
 
-    .logo img{height:50px; margin:0 10px; object-fit: contain;}
+    /* Logo Glow Fix for JPGs */
+    .logo { display: flex; align-items: center; }
+    .logo img{
+        height:50px; 
+        margin:0 10px; 
+        object-fit: contain;
+        border-radius: 50%; /* Optional: keeps jpgs neat */
+        box-shadow: 0 0 15px rgba(243, 200, 75, 0.3);
+        transition: 0.4s;
+    }
+    .logo img:hover { transform: scale(1.1); box-shadow: 0 0 20px #f3c84b; }
 
     .title{
         font-family:Cinzel;
         letter-spacing:3px;
         font-size:26px;
+        color: #f3c84b;
+        text-shadow: 0 0 10px rgba(243, 200, 75, 0.5);
     }
 
+    /* Hero Section with Animation */
     .hero{
         height:100vh;
-        /* Matches your file: poster.jpg */
         background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("poster.jpg") center/cover fixed;
         display:flex;
         flex-direction:column;
@@ -50,12 +64,22 @@
         font-family:Cinzel;
         font-size:90px;
         letter-spacing:6px;
+        color: #fff;
+        text-shadow: 0 0 20px #f3c84b, 0 0 40px #f3c84b;
+        animation: glowPulse 3s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+        from { text-shadow: 0 0 10px #f3c84b, 0 0 20px #f3c84b; }
+        to { text-shadow: 0 0 20px #f3c84b, 0 0 50px #f3c84b, 0 0 80px #f3c84b; }
     }
 
     .hero p{
         font-size:22px;
         max-width:700px;
         margin-top:20px;
+        opacity: 0;
+        animation: fadeInUp 1s forwards 0.5s;
     }
 
     .btn{
@@ -70,17 +94,36 @@
         text-decoration: none;
         color: black;
         display: inline-block;
+        box-shadow: 0 0 15px rgba(243, 200, 75, 0.4);
+        transition: 0.3s;
+    }
+
+    .btn:hover{
+        transform: scale(1.05);
+        box-shadow: 0 0 30px #f3c84b;
+        background: #fff;
     }
 
     .countdown{
         margin-top:25px;
         font-size:36px;
         color:#f3c84b;
+        font-weight: bold;
+        text-shadow: 0 0 10px rgba(243, 200, 75, 0.3);
     }
 
+    /* Sections and Cards */
     section{
         padding:100px 10%;
         text-align:center;
+    }
+
+    h2 {
+        font-family: Cinzel;
+        font-size: 40px;
+        margin-bottom: 20px;
+        color: #f3c84b;
+        text-shadow: 0 0 10px rgba(243, 200, 75, 0.2);
     }
 
     .cards{
@@ -94,13 +137,17 @@
         background:#1a1a1a;
         padding:45px;
         border-radius:16px;
-        transition:0.3s;
+        border: 1px solid transparent;
+        transition:0.4s;
     }
 
     .card:hover{
-        transform:translateY(-10px);
-        box-shadow:0 15px 40px rgba(0,0,0,0.6);
+        transform:translateY(-15px);
+        box-shadow:0 15px 40px rgba(243, 200, 75, 0.2);
+        border: 1px solid #f3c84b;
     }
+
+    .card h3 { color: #f3c84b; margin-bottom: 10px; }
 
     .map-section{ background:#111; }
 
@@ -109,21 +156,37 @@
         padding:30px;
         background:#1c1c1c;
         border-radius:20px;
+        transition: 1s;
     }
+    
+    .map-box:hover { transform: scale(1.02); }
 
     .map-box img{
         width:100%;
         max-width: 800px;
         border-radius:12px;
+        filter: sepia(0.3) contrast(1.1);
     }
 
-    .step{ margin:25px 0; font-size:20px; }
+    .step{ 
+        margin:25px 0; 
+        font-size:22px; 
+        transition: 0.3s;
+    }
+    .step:hover { color: #f3c84b; transform: translateX(10px); }
 
-    footer{ padding:30px; text-align:center; background:black; }
+    footer{ padding:30px; text-align:center; background:black; border-top: 1px solid #333; }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 
     @media(max-width:768px){
         .hero h1{ font-size:60px; }
         .countdown{ font-size:26px; }
+        header { padding: 15px 20px; }
     }
 </style>
 </head>
@@ -138,7 +201,8 @@
     <div class="title">QUESTA 2026</div>
 
     <div class="logo">
-        <img src="iem-uem.png" alt="IEM UEM Logo">
+        <img src="iem.jpg" alt="IEM Logo">
+        <img src="uem.jpg" alt="UEM Logo">
     </div>
 </header>
 
