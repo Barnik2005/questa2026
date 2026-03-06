@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUESTA 2026 | Treasure Hunt</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+        font-family:Poppins, sans-serif;
+        background:#0c0c0c;
+        color:white;
+        overflow-x:hidden;
+    }
+
+    header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px 40px;
+        background:black;
+        position:sticky;
+        top:0;
+        z-index:1000;
+    }
+
+    .logo img{height:50px; margin:0 10px; object-fit: contain;}
+
+    .title{
+        font-family:Cinzel;
+        letter-spacing:3px;
+        font-size:26px;
+    }
+
+    .hero{
+        height:100vh;
+        /* Matches your file: poster.jpg */
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("poster.jpg") center/cover fixed;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+    }
+
+    .hero h1{
+        font-family:Cinzel;
+        font-size:90px;
+        letter-spacing:6px;
+    }
+
+    .hero p{
+        font-size:22px;
+        max-width:700px;
+        margin-top:20px;
+    }
+
+    .btn{
+        margin-top:30px;
+        padding:16px 45px;
+        background:#f3c84b;
+        border:none;
+        border-radius:40px;
+        font-size:20px;
+        font-weight:600;
+        cursor:pointer;
+        text-decoration: none;
+        color: black;
+        display: inline-block;
+    }
+
+    .countdown{
+        margin-top:25px;
+        font-size:36px;
+        color:#f3c84b;
+    }
+
+    section{
+        padding:100px 10%;
+        text-align:center;
+    }
+
+    .cards{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+        gap:30px;
+        margin-top:50px;
+    }
+
+    .card{
+        background:#1a1a1a;
+        padding:45px;
+        border-radius:16px;
+        transition:0.3s;
+    }
+
+    .card:hover{
+        transform:translateY(-10px);
+        box-shadow:0 15px 40px rgba(0,0,0,0.6);
+    }
+
+    .map-section{ background:#111; }
+
+    .map-box{
+        margin-top:40px;
+        padding:30px;
+        background:#1c1c1c;
+        border-radius:20px;
+    }
+
+    .map-box img{
+        width:100%;
+        max-width: 800px;
+        border-radius:12px;
+    }
+
+    .step{ margin:25px 0; font-size:20px; }
+
+    footer{ padding:30px; text-align:center; background:black; }
+
+    @media(max-width:768px){
+        .hero h1{ font-size:60px; }
+        .countdown{ font-size:26px; }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="cass.png" alt="CASS Logo">
+    </div>
+
+    <div class="title">QUESTA 2026</div>
+
+    <div class="logo">
+        <img src="iem-uem.png" alt="IEM UEM Logo">
+    </div>
+</header>
+
+<div class="hero">
+    <h1>QUESTA</h1>
+    <p>The map is ready. The clues are hidden. The hunt begins.</p>
+    <div id="countdown" class="countdown"></div>
+    <a href="https://forms.gle/xCchkuLSCXxkgDL98" class="btn">Register Now</a>
+</div>
+
+<section>
+    <h2>About The Hunt</h2>
+    <p style="max-width:700px;margin:auto;margin-top:20px">
+        QUESTA is a campus-wide treasure hunt packed with puzzles, secret clues, and mysterious locations. Teams must think fast, decode cleverly, and race across the campus map to reach the final treasure.
+    </p>
+    <div class="cards">
+        <div class="card">
+            <h3>📅 Event Date</h3>
+            <p>21 March 2026</p>
+        </div>
+        <div class="card">
+            <h3>👥 Team Size</h3>
+            <p>2–3 Members per team</p>
+        </div>
+        <div class="card">
+            <h3>🏆 Rewards</h3>
+            <p>Exciting prizes + Goodie bags</p>
+        </div>
+    </div>
+</section>
+
+<section class="map-section">
+    <h2>The Treasure Map</h2>
+    <div class="map-box">
+        <img src="map.jpg" alt="treasure map">
+    </div>
+</section>
+
+<section>
+    <h2>How The Hunt Works</h2>
+    <div class="step">🔍 Find the first clue</div>
+    <div class="step">🧩 Solve the puzzle</div>
+    <div class="step">🗺️ Discover the next location</div>
+    <div class="step">🏁 Reach the final treasure</div>
+</section>
+
+<section style="background:#000;">
+    <h2>Contact</h2>
+    <p style="margin-top:20px">Deep Batabyal: +91 81011 44074</p>
+    <p>Sarbatriki Jana: +91 86970 42026</p>
+</section>
+
+<footer>
+    <p>Organized by IEEE IEM CASS</p>
+    <p>© 2026 IEM-UEM</p>
+</footer>
+
+<script>
+    var countDownDate = new Date("March 21, 2026 00:00:00").getTime();
+    setInterval(function(){
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var el = document.getElementById("countdown");
+        if(distance > 0){
+            el.innerHTML = days + " Days " + hours + " Hours " + minutes + " Minutes";
+        } else {
+            el.innerHTML = "THE HUNT HAS BEGUN!";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
